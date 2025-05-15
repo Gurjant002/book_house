@@ -30,9 +30,9 @@ body {
   font-family: monospace;
   white-space: nowrap;
   border-right: .15em solid var(--foreground);
-  width: 103ch;
+  width: 41ch;
   /* overflow: hidden; */
-  animation: typing 15s steps(103), blink .5s infinite step-end alternate;
+  animation: typing 15s steps(41), blink .5s infinite step-end alternate;
   overflow: hidden;
 }
 
