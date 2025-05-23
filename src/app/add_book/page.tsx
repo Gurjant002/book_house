@@ -9,14 +9,14 @@ export default function Login() {
   const [year, setYear] = useState<number>(new Date().getFullYear());
   
   const [books, setBooks] = useState<Book[]>([]);
-  const [book, setBook] = useState<Book>({
-    title: " ",
-    author: " ",
+  const [book, setBook] = useState({
+    title: "",
+    author: "",
     published_year: 0,
-    isbn: " ",
+    isbn: "",
     pages: 0,
-    cover: undefined,
-    language: " "
+    cover: undefined as File | undefined, // Aquí almacenaremos el archivo de imagen
+    language: "",
   });
 
   const router = useRouter();
@@ -40,23 +40,36 @@ export default function Login() {
   }, [action]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setBook({
       ...book,
-      [e.target.name]: e.target.value
-    })
-    console.log(book);
-    
-  }
+      [name]: value,
+    });
+  };
 
   const handleUploadCover = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    console.log(file);
+    const file = e.target.files?.[0]; // Obtén el archivo seleccionado
+    if (file) {
+      setBook({
+        ...book,
+        cover: file, // Almacena el archivo en la propiedad cover
+      });
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(!(book.title === "" || book.author === "" || book.published_year === 0 || book.isbn === "" || book.pages === 0)) {
-      setBooks([...books, book]);
+      if (book.cover) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const coverData = reader.result as string | ArrayBuffer;
+          setBooks([...books, { ...book, cover: coverData }]);
+        };
+        reader.readAsDataURL(book.cover);
+      } else {
+        setBooks([...books, { ...book, cover: undefined }]);
+      }
       setBook({
         title: " ",
         author: " ",
@@ -142,7 +155,7 @@ export default function Login() {
                 Number of Pages
               </label>
               <input
-                type="text"
+                type="number"
                 id="pages"
                 name="pages"
                 // value={book.pages}
@@ -182,6 +195,7 @@ export default function Login() {
               <h3 className="text-xl font-bold">{book.title}</h3>
               <img
                 alt={book.title}
+                src={book.cover}
                 className="w-full h-auto rounded-lg mb-4" />
               <p className="text-gray-700">Author: {book.author}</p>
               <p className="text-gray-700">Published Year: {book.published_year}</p>
