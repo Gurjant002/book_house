@@ -16,6 +16,7 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    color: var(--background);
   }
 }
 
@@ -30,10 +31,16 @@ body {
   font-family: monospace;
   white-space: nowrap;
   border-right: .15em solid var(--foreground);
-  width: 41ch;
-  /* overflow: hidden; */
-  animation: typing 15s steps(41), blink .5s infinite step-end alternate;
+  width: 35ch;
+  max-width: 100%; /* Added for responsiveness */
+  animation: typing 15s steps(36), blink .1s infinite step-end alternate;
   overflow: hidden;
+}
+
+@media (max-width: 600px) { /* Responsive adjustments for smaller screens */
+  .animation-typing {
+    width: 31ch; /* Adjust width for smaller screens */
+  }
 }
 
 @keyframes typing {
