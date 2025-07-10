@@ -44,7 +44,7 @@ export default function Catalog() {
         </header>
 
         {error == false && error !== null ?
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 px-48">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-48">
           {books.map((book: Book) => (
             <div key={book.id} className="bg-gray-800 text-white p-3 rounded-lg shadow-lg flex flex-col gap-3 h-fit">
               <div className="flex flex-col gap-1">
@@ -58,6 +58,7 @@ export default function Catalog() {
                 </div>
                 <div className="text-lg text-justify">
                   <p className="text-2xl font-semibold">Description</p>
+                  <p>Owner: {book.owner_id ? book.owner_id : "Gurjant Singh"}</p>
                   <p>Author: {book.author}</p>
                   <p>ISBN: {book.isbn}</p>
                   <p>Pages: {book.pages}</p>
