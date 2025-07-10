@@ -44,28 +44,32 @@ export default function Catalog() {
         </header>
 
         {error == false && error !== null ?
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 px-48">
           {books.map((book: Book) => (
-            <div key={book.id} className="bg-gray-800 text-white p-8 rounded-lg shadow-lg w-80">
-              <div className="grid grid-rows-2 gap-1">
-                <div className="min-h-24 min-w-full">
-                  <h2 className="text-2xl font-bold">{book.title}</h2>
-                  <Image src={`data:image/jpeg;base64, ${book.cover?.split(',')[1]}`} alt={book.title} className="w-full object-contain" width={384} height={384} />
+            <div key={book.id} className="bg-gray-800 text-white p-8 rounded-lg shadow-lg flex flex-col h-fit">
+              <div className="flex flex-col gap-1">
+                <div className="flex flex-col">
+                  <div className="">
+                    <h2 className="text-2xl font-bold">{book.title}</h2>
+                  </div>
+                  <div className="h-52">
+                    <img src={`data:image/jpeg;base64, ${book.cover?.split(',')[1]}`} alt={book.title} className="size-52 object-cover" />
+                  </div>
                 </div>
-                <div className="p-3 text-lg max-w-xs text-justify">
-                  <p className="text-2xl font-semibold max-w-xs">Description</p>
+                <div className="p-3 text-lg text-justify">
+                  <p className="text-2xl font-semibold">Description</p>
                   <p>Author: {book.author}</p>
                   <p>ISBN: {book.isbn}</p>
                   <p>Pages: {book.pages}</p>
                   <p>Year: {book.published_year}</p>
                   <p>ID: {book.id}</p>
                 </div>
-                <div>
-                {true ? <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-semibold bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Available</span> :
+              </div>
+              <div>
+                {book.available ? <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-semibold bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Available</span> :
                 <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-semibold bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">Not Available</span>
 
                 }
-                </div>
               </div>
             </div>
           ))}

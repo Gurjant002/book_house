@@ -18,7 +18,7 @@ export default function Login() {
     published_year: 0,
     isbn: "",
     pages: 0,
-    cover: undefined as File | undefined, // Aquí almacenaremos el archivo de imagen
+    cover: undefined as File | undefined | string, // Aquí almacenaremos el archivo de imagen
     language: "",
     available: true, // Por defecto, el libro está disponible
   });
@@ -70,7 +70,9 @@ export default function Login() {
           const coverData = reader.result as string | ArrayBuffer;
           setBooks([...books, { ...book, cover: typeof coverData === 'string' ? coverData : undefined }]);
         };
-        reader.readAsDataURL(book.cover);
+        if (book.cover instanceof File) {
+          reader.readAsDataURL(book.cover);
+        }
       } else {
         setBooks([...books, { ...book, cover: undefined }]);
       }
@@ -156,7 +158,7 @@ export default function Login() {
                   type="text"
                   id="title"
                   name="title"
-                  // value={book.title}
+                  value={book.title}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   // required
@@ -170,7 +172,7 @@ export default function Login() {
                   type="text"
                   id="author"
                   name="author"
-                  // value={book.author}
+                  value={book.author}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   // required
@@ -181,10 +183,10 @@ export default function Login() {
                   Published Year
                 </label>
                 <input
-                  type="number" placeholder="YYYY" min="1999" max={year}
+                  type="number" placeholder="YYYY" min="0001" max={year}
                   id="published_year"
                   name="published_year"
-                  // value={book.published_year}
+                  value={book.published_year}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   // required
@@ -198,7 +200,7 @@ export default function Login() {
                   type="text"
                   id="isbn"
                   name="isbn"
-                  // value={book.isbn}
+                  value={book.isbn}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   // required
@@ -212,7 +214,7 @@ export default function Login() {
                   type="number"
                   id="pages"
                   name="pages"
-                  // value={book.pages}
+                  value={book.pages}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   // required
@@ -227,7 +229,7 @@ export default function Login() {
                   accept="image/*"
                   id="cover"
                   name={"cover"}
-                  // value={book.cover}
+                  value={book.cover}
                   onChange={handleUploadCover}
                   className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   // required
