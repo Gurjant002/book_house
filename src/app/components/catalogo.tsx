@@ -36,7 +36,7 @@ export default function Catalog() {
   return (
     // <div className="font-mono flex min-h-screen flex-col items-center justify-between bg-gradient-to-r from-emerald-500 to-emerald-900">
     <div className="font-mono flex min-h-screen flex-col items-center justify-between">
-      <main className={"flex min-h-screen flex-col items-center gap-5"}>
+      <main className={"flex min-h-screen flex-col items-center gap-5 dark:bg-gray-600"}>
         {/* <header className="z-10 max-w-6xl items-center justify-between font-mono my-3 bg-amber-400 text-amber-50 p-5 rounded"> */}
         <header className="z-10 max-w-6xl items-center justify-between font-mono my-3 p-5">
           <h1 className="text-3xl md:text-6xl font-bold my-3 break-all md:break-words">Welcome to G-Books {error}</h1>
@@ -46,7 +46,7 @@ export default function Catalog() {
         {error == false && error !== null ?
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 px-48">
           {books.map((book: Book) => (
-            <div key={book.id} className="bg-gray-800 text-white p-8 rounded-lg shadow-lg flex flex-col h-fit">
+            <div key={book.id} className="bg-gray-800 text-white p-3 rounded-lg shadow-lg flex flex-col gap-3 h-fit">
               <div className="flex flex-col gap-1">
                 <div className="flex flex-col">
                   <div className="">
@@ -56,7 +56,7 @@ export default function Catalog() {
                     <img src={`data:image/jpeg;base64, ${book.cover?.split(',')[1]}`} alt={book.title} className="size-52 object-cover" />
                   </div>
                 </div>
-                <div className="p-3 text-lg text-justify">
+                <div className="text-lg text-justify">
                   <p className="text-2xl font-semibold">Description</p>
                   <p>Author: {book.author}</p>
                   <p>ISBN: {book.isbn}</p>
@@ -68,7 +68,6 @@ export default function Catalog() {
               <div>
                 {book.available ? <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-semibold bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Available</span> :
                 <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-semibold bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">Not Available</span>
-
                 }
               </div>
             </div>

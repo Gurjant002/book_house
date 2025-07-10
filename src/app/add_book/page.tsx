@@ -229,7 +229,7 @@ export default function Login() {
                   accept="image/*"
                   id="cover"
                   name={"cover"}
-                  value={book.cover}
+                  value={book.cover ? (book.cover instanceof File ? book.cover.name : "") : ""}
                   onChange={handleUploadCover}
                   className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   // required

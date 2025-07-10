@@ -9,4 +9,6 @@ export interface Book {
   language: string;
   description?: string;
   available: boolean;
+  owner_id?: number;
+  date_added?: Date;
 }

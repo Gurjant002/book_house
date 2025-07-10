@@ -1,10 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
 import HeaderPanel from "../components/header_panel";
+import { LoginUser } from "@/models/user";
 
 export default function Login() {
   const [action, setAction] = useState<string | undefined>();
+  const [error, setError] = useState<string | null>(null);
+  const [user, setUser] = useState<LoginUser>({
+    username: "",
+    password: "",
+  });
   
   const router = useRouter();
 
@@ -26,6 +33,14 @@ export default function Login() {
   
   }, [action]);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setUser({
+        ...user,
+        [name]: value,
+      });
+    };
+
   return (
     <>
       <HeaderPanel />
@@ -42,6 +57,10 @@ export default function Login() {
                 type="username"
                 id="username"
                 name="username"
+                onChange={handleChange}
+                placeholder="Username or Email"
+                value={user.username}
+                required={true}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 // required
               />
@@ -54,6 +73,10 @@ export default function Login() {
                 type="password"
                 id="password"
                 name="password"
+                onChange={handleChange}
+                placeholder="Password"
+                required={true}
+                value={user.password}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 // required
               />
