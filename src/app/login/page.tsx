@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import HeaderPanel from "../components/header_panel";
 import { LoginUser } from "@/models/user";
+import { loginUser, validateToken } from "@/api/user";
 
 export default function Login() {
   const [action, setAction] = useState<string | undefined>();
@@ -16,7 +17,9 @@ export default function Login() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
+    const token = sessionStorage.getItem("token");
+
+    
 
     if (token) {
       // If token exists, redirect to home page
@@ -34,12 +37,29 @@ export default function Login() {
   }, [action]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setUser({
-        ...user,
-        [name]: value,
-      });
-    };
+    const { name, value } = e.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new URLSearchParams();
+    formData.append("username", user.username? user.username : "");
+    formData.append("password", user.password);
+    try {
+      const response = await loginUser(formData);
+      if (response) {
+        sessionStorage.setItem("token", JSON.stringify(response));
+        setAction("login");
+        router.push("/");
+      }
+    } catch (err: any) {
+      setError(err.message || "An error occurred during login.");
+    }
+  };
 
   return (
     <>
@@ -83,7 +103,7 @@ export default function Login() {
             </div>
             <button
               // type="submit"
-              onClick={() => setAction("login")}
+              onClick={handleSubmit}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
             >
               Login

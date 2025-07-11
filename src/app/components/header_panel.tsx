@@ -20,16 +20,17 @@ export default function HeaderPanel() {
     fetchData();
   }, []); */
 
-  /* const navigate = useRouter();
+  const navigate = useRouter();
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = 
+    sessionStorage.getItem("token");
     if (!token) {
       navigate.push("/login");
     } else {
       console.log("Token:", token);
       
     }
-  }, []); */
+  }, []);
 
   return (
     <header className="font-mono p-5 bg-gray-800">
