@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 
 import HeaderPanel from "../components/header_panel";
 import { LoginUser } from "@/models/user";
-import { loginUser, validateToken } from "@/api/user";
+import { validateToken } from "@/api/token";
+import { loginUser } from "@/api/user";
 
 export default function Login() {
   const [action, setAction] = useState<string | undefined>();
@@ -18,9 +19,6 @@ export default function Login() {
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
-
-    
-
     if (token) {
       // If token exists, redirect to home page
       window.location.href = "/";
@@ -57,7 +55,7 @@ export default function Login() {
         router.push("/");
       }
     } catch (err: any) {
-      setError(err.message || "An error occurred during login.");
+      setError(err.message);
     }
   };
 
@@ -65,8 +63,15 @@ export default function Login() {
     <>
       <HeaderPanel />
       <div className="flex min-h-screen flex-col items-center justify-center bg-gray-800">
-        <div className="bg-white p-8 rounded-lg shadow-lg w-80">
-          <h2 className="text-2xl font-bold">Login</h2>
+        <div className="bg-white dark:text-gray-800 p-8 rounded-lg shadow-lg w-80">
+          <div>
+            <h2 className="text-2xl font-bold">Login</h2>
+          </div>
+          {error && 
+            <div className="bg-red-200 mt-4 text-red-700 text-sm mb-4 p-2 rounded-2xl">
+              {error}
+            </div>
+          }
           {/* <form className="mt-4" action="/api/login" method="POST"> */}
           <div className="mt-4">
             <div className="mb-4">

@@ -1,5 +1,5 @@
-import { LoginUser, RegisterUser } from "@/models/user";
-import { Token } from "@/models/token";
+import { User, NonSensitiveUser, LoginUser, RegisterUser } from "@/models/user";
+import { Token, ValidatedToken } from "@/models/token";
 
 const API_URL = 'http://localhost:8000/api/users';
 
@@ -38,19 +38,34 @@ export async function loginUser(form: URLSearchParams): Promise<Token> {
   return data;
 }
 
-export async function validateToken(token: string): Promise<boolean> {
-  const response = await fetch(`${API_URL}/validate_token`, {
-    method: "POST",
+export async function getUser(id: string): Promise<User> {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
     },
   });
 
   if (!response.ok) {
-    throw new Error("Failed to validate token");
+    throw new Error("Failed to fetch user");
   }
 
-  const data = await response.json();
-  return data.is_valid;
+  const data: User = await response.json();
+  return data;
+}
+
+export async function getUserByEmail(email: string): Promise<NonSensitiveUser> {
+  const response = await fetch(`${API_URL}/get-user-by-email?email=${email}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch user");
+  }
+
+  const data: NonSensitiveUser = await response.json();
+  return data;
 }

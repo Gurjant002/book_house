@@ -12,6 +12,15 @@ export interface User {
     birth_date?: string; // Optional field for date of birth
 }
 
+export interface NonSensitiveUser {
+    id: number;
+    username: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    is_active: boolean;
+}
+
 export interface RegisterUser extends User {
     confirm_password: string;
     confirm_email: string;

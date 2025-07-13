@@ -1,5 +1,13 @@
 export interface Token {
-  accessToken: string;
-  tokenExpiration: string;
-  refreshToken: string;
+  access_token: string;
+  token_expiration: string;
+  refresh_token: string;
+}
+
+export interface ValidatedToken {
+    status: string;
+    payload: {
+        sub: string;
+        exp: number;
+    };
 }
