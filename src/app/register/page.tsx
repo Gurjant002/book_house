@@ -56,19 +56,17 @@ export default function Register() {
     try {
       const response = await registerUser(user)
       if (response) {
-        console.log("User registered successfully:", response)
         // Redirect to login or home page
       }
     } catch (error) {
-      console.error("Error registering user:", error)
       setError("Registration failed. Please try again.")
     }
   }
 
   return (
     <>
-      <HeaderPanel />
-      <main className="min-h-screen bg-gray-800">
+      {/* <HeaderPanel /> */}
+      <main className="min-h-screen bg-gray-800 py-32">
         <div className="bg-white dark:bg-gray-600 p-5 m-auto w-full lg:w-7xl lg:rounded-2xl">
           <div>
             <h2 className="text-2xl font-bold">Register</h2>
