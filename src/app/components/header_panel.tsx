@@ -65,7 +65,7 @@ export default function HeaderPanel() {
       navigate.push("/login");
     } else {
       console.log("Token:", token);
-      
+
     }
   }, []);
 
