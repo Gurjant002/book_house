@@ -19,6 +19,8 @@ export interface NonSensitiveUser {
     first_name: string;
     last_name: string;
     is_active: boolean;
+    date_joined: string;
+    birth_date: string; // Optional field for date of birth
 }
 
 export interface RegisterUser extends User {

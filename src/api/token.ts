@@ -18,3 +18,5 @@ export async function validateToken(token: string): Promise<ValidatedToken> {
   const data = await response.json();
   return data;
 }
+
+

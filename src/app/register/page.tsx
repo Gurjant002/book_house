@@ -6,11 +6,13 @@ import HeaderPanel from "../components/header_panel"
 import { RegisterUser } from "@/models/user"
 
 import { registerUser } from "@/api/user"
+import { useRouter } from "next/navigation"
 
 export default function Register() {
-  const [error, setError] = useState<string | null>(null)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [confirmPass, setConfirmPass] = useState<boolean>()
   const [confirmEmail, setConfirmEmail] = useState<boolean>()
+  
   const [user, setUser] = useState<RegisterUser>({
     username: "",
     email: "",
@@ -26,6 +28,8 @@ export default function Register() {
     birth_date: "",
   })
 
+  const router = useRouter();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setUser({
@@ -37,10 +41,10 @@ export default function Register() {
   const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     if (value !== user.password) {
-      setError("Passwords do not match")
+      setErrorMsg("Passwords do not match")
       setConfirmPass(false)
     } else {
-      setError(null)
+      setErrorMsg(null)
       setConfirmPass(true)
     }
     setUser({
@@ -55,22 +59,34 @@ export default function Register() {
     }
     try {
       const response = await registerUser(user)
-      if (response) {
+      if (response.status === 200) {
+        router.push("/login"); // Redirect to login page after successful registration
+        
         // Redirect to login or home page
+      } else {
+        setErrorMsg("Registration failed. Please try again. <br />" + await response.json().then((data: { detail: string }) => data.detail))
       }
     } catch (error) {
-      setError("Registration failed. Please try again.")
+      setErrorMsg("Registration failed. Please try again.")
     }
   }
 
   return (
     <>
       {/* <HeaderPanel /> */}
+      <header className="font-mono p-5 bg-gray-800 text-white">
+        <div className="m-auto w-full lg:w-7xl flex justify-center">
+          <a href="/" className="font-bold text-4xl text-center">G-BOOK</a>
+        </div>
+      </header>
       <main className="min-h-screen bg-gray-800 py-32">
         <div className="bg-white dark:bg-gray-600 p-5 m-auto w-full lg:w-7xl lg:rounded-2xl">
           <div>
             <h2 className="text-2xl font-bold">Register</h2>
           </div>
+          {errorMsg && <p className="text-red-500 text-sm font-bold" dangerouslySetInnerHTML={{ __html: errorMsg }}></p>}
+          <p className="text-gray-500 text-sm">Please fill in the form below to create an account.</p>
+          <br />
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-4 py-5"  >
             <div>
               <label htmlFor="first_name" className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">
@@ -97,6 +113,7 @@ export default function Register() {
                 onChange={handleChange}
                 placeholder="Enter your last name"
                 value={user.last_name}
+                required
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               />
             </div>
@@ -110,6 +127,7 @@ export default function Register() {
                 name="birth_date"
                 onChange={handleChange}
                 value={user.birth_date}
+                required
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               />
             </div>
