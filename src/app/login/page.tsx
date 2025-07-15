@@ -21,7 +21,11 @@ export default function Login() {
     const token = sessionStorage.getItem("token");
     if (token) {
       // If token exists, redirect to home page
-      window.location.href = "/";
+      if (document.referrer && document.referrer !== window.location.href) {
+        router.back();
+      }else {
+        router.push("/"); // Redirect to home page if no previous page
+      }
     }
   }, []);
 
@@ -29,7 +33,11 @@ export default function Login() {
     if (action === "login") {
       // Perform login action
       console.log("Performing login action");
-      router.push("/");
+      if (document.referrer && document.referrer !== window.location.href) {
+        router.back();
+      }else {
+        router.push("/"); // Redirect to home page if no previous page
+      }
     }
   
   }, [action]);
@@ -52,7 +60,11 @@ export default function Login() {
       if (response) {
         sessionStorage.setItem("token", JSON.stringify(response));
         setAction("login");
-        router.push("/");
+        if (document.referrer && document.referrer !== window.location.href) {
+          router.back();
+        }else {
+          router.push("/"); // Redirect to home page if no previous page
+        }
       }
     } catch (err: any) {
       setError(err.message);

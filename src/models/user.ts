@@ -1,3 +1,4 @@
+import { Book } from "./book";
 export interface User {
     id?: number;
     username: string;
@@ -31,4 +32,9 @@ export interface RegisterUser extends User {
 export interface LoginUser {
     username?: string;
     password: string;
+}
+
+export interface UserBooks extends NonSensitiveUser {
+    readed_books: number[];
+    rented_books: number[];
 }

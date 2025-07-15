@@ -21,6 +21,7 @@ export default function Login() {
     cover: undefined as File | undefined | string, // Aquí almacenaremos el archivo de imagen
     language: "",
     available: true, // Por defecto, el libro está disponible
+    owner_id: null,
   });
 
   const router = useRouter();

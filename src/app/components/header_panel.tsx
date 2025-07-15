@@ -101,7 +101,7 @@ export default function HeaderPanel() {
                   onClick={() => {router.push("/profile")}}
                   >Profile
                 </button> */}
-                <a href={`/profile?id=${userData?.id}`} className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer">{userData?.username}</a>
+                <a href={`/profile`} className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer">{userData?.username}</a>
               </div>
               <div>
                 <button 

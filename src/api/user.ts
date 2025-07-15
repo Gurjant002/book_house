@@ -16,11 +16,12 @@ export async function registerUser(user: RegisterUser) {
   return data;
 }
 
-export async function getUserById(id: string): Promise<NonSensitiveUser> {
-  const response = await fetch(`${API_URL}/get-user/${id}`, {
+export async function getUserProfile(token: string): Promise<NonSensitiveUser> {
+  const response = await fetch(`${API_URL}/get-profile`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
     },
   });
 
