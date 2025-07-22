@@ -1,15 +1,24 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
 import HeaderPanel from "../components/header_panel";
-import { Book } from "../../models/book";
 import Alertas from "../components/alertas";
+
 import { saveBook } from "@/api/book";
+import { getUser } from "@/api/user";
+
+import { Book } from "../../models/book";
+import { NonSensitiveUser } from "../../models/user";
+import { ValidatedToken } from "@/models/token";
 
 export default function Login() {
   const [action, setAction] = useState<string | undefined>();
   const [year, setYear] = useState<number>(new Date().getFullYear());
   
+  const [user, setUser] = useState<NonSensitiveUser | null>(null); // Para manejar el usuario
+  const [token, setToken] = useState<ValidatedToken | null>(null); // Para manejar el token de autenticación
+
   const [error, setError] = useState<number | null>(null); // Para manejar errores
   const [books, setBooks] = useState<Book[]>([]);
   const [book, setBook] = useState({
@@ -27,12 +36,7 @@ export default function Login() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
-
-    if (token) {
-      // If token exists, redirect to home page
-      window.location.href = "/";
-    }
+    
   }, []);
 
   useEffect(() => {
@@ -69,13 +73,13 @@ export default function Login() {
         const reader = new FileReader();
         reader.onload = () => {
           const coverData = reader.result as string | ArrayBuffer;
-          setBooks([...books, { ...book, cover: typeof coverData === 'string' ? coverData : undefined }]);
+          setBooks([...books, { ...book, cover: typeof coverData === 'string' ? coverData : undefined, owner_id: undefined }]);
         };
         if (book.cover instanceof File) {
           reader.readAsDataURL(book.cover);
         }
       } else {
-        setBooks([...books, { ...book, cover: undefined }]);
+        setBooks([...books, { ...book, cover: undefined, owner_id: undefined }]);
       }
       setBook({
         title: " ",
@@ -86,6 +90,7 @@ export default function Login() {
         cover: undefined,
         language: " ",
         available: true, // Por defecto, el libro está disponible
+        owner_id: null,
       });
     }
   }

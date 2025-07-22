@@ -21,6 +21,10 @@ export default function Profile() {
 
   useEffect(() => {
     const token: Token = JSON.parse(sessionStorage.getItem("token") || "{}");
+    if (!token || !token.access_token) {
+      router.push("/login");
+      return;
+    }
     getUserProfile(token.access_token)
         .then(setUser)
         .catch((error) => {

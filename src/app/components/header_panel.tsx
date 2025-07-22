@@ -18,10 +18,24 @@ export default function HeaderPanel() {
   const [userData, setUserData] = useState<NonSensitiveUser | null>(null);
 
   const router = useRouter();
+  const navigate = useRouter();
   useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      navigate.push("/login");
+    } else {
+      console.log("Token:", token);
+
+    }
+  }, []);
+
+  useEffect(() => {
+    const token: Token = JSON.parse(sessionStorage.getItem("token") || "{}");
+    if (!token) {
+      navigate.push("/login");
+    }
     const fetchData = async () => {
       try {
-        const token: Token = JSON.parse(sessionStorage.getItem("token") || "{}");
         if (!token || !token.access_token) {
           setValidatedToken(false);
           router.push("/login");
@@ -56,18 +70,6 @@ export default function HeaderPanel() {
       fetchUserData();
     }
   }, [tokenData])
-
-  const navigate = useRouter();
-  useEffect(() => {
-    const token = 
-    sessionStorage.getItem("token");
-    if (!token) {
-      navigate.push("/login");
-    } else {
-      console.log("Token:", token);
-
-    }
-  }, []);
 
   const logoutHandler = () => {
     sessionStorage.removeItem("token");
