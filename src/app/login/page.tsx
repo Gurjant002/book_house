@@ -4,11 +4,10 @@ import { useRouter } from "next/navigation";
 
 import HeaderPanel from "../components/header_panel";
 import { LoginUser } from "@/models/user";
-import { validateToken } from "@/api/token";
 import { loginUser } from "@/api/user";
+import { useUser } from "@/context/UserContext";
 
 export default function Login() {
-  const [action, setAction] = useState<string | undefined>();
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<LoginUser>({
     username: "",
@@ -16,31 +15,14 @@ export default function Login() {
   });
   
   const router = useRouter();
+  const { login, isAuthenticated, isLoading } = useUser();
 
+  // Si ya está autenticado, redirigir
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (token) {
-      // If token exists, redirect to home page
-      if (document.referrer && document.referrer !== window.location.href) {
-        router.back();
-      }else {
-        router.push("/"); // Redirect to home page if no previous page
-      }
+    if (isAuthenticated) {
+      router.push("/");
     }
-  }, []);
-
-  useEffect(() => {
-    if (action === "login") {
-      // Perform login action
-      console.log("Performing login action");
-      if (document.referrer && document.referrer !== window.location.href) {
-        router.back();
-      }else {
-        router.push("/"); // Redirect to home page if no previous page
-      }
-    }
-  
-  }, [action]);
+  }, [isAuthenticated, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,19 +34,18 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    
     const formData = new URLSearchParams();
     formData.append("username", user.username? user.username : "");
     formData.append("password", user.password);
+    
     try {
       const response = await loginUser(formData);
       if (response) {
-        sessionStorage.setItem("token", JSON.stringify(response));
-        setAction("login");
-        if (document.referrer && document.referrer !== window.location.href) {
-          router.back();
-        }else {
-          router.push("/"); // Redirect to home page if no previous page
-        }
+        // Usar el método login del Context
+        await login(response);
+        router.push("/");
       }
     } catch (err: any) {
       setError(err.message);
