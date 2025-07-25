@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --cus-dark: #1E2923;
+  --cus-purpule: #8d52cc;
+  --cus-dark-blue: #1C1DE6;
+  --cus-light-blue: #0195E6;
+  --cus-light-blue-2: #5AB5FF;
+
 }
 
 @theme inline {
@@ -50,3 +57,39 @@ body {
 @keyframes blink {
   50% { border-color: var(--foreground) }
 }
+
+.cus-dark-bg {
+  background-color: var(--cus-dark);
+}
+.cus-dark-text {
+  color: var(--cus-dark);
+}
+
+.cus-purpule-bg {
+  background-color: var(--cus-purpule);
+}
+.cus-purpule-text {
+  color: var(--cus-purpule);
+}
+
+.cus-dark-blue-bg {
+  background-color: var(--cus-dark-blue);
+}
+.cus-dark-blue-text {
+  color: var(--cus-dark-blue);
+}
+
+.cus-light-blue-bg {
+  background-color: var(--cus-light-blue);
+}
+.cus-light-blue-text {
+  color: var(--cus-light-blue);
+}
+
+.cus-light-blue-2-bg {
+  background-color: var(--cus-light-blue-2);
+}
+.cus-light-blue-2-text {
+  color: var(--cus-light-blue-2);
+}
+

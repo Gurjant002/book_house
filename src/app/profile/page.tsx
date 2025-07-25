@@ -1,14 +1,14 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import HeaderPanel from "../components/header_panel";
 import { useUser } from "@/context/UserContext";
+import { getOwnedBooks } from "@/api/book";
 
 export default function Profile() {
   const router = useRouter();
-  const { user, isAuthenticated, isLoading } = useUser();
+  const { user, isAuthenticated, isLoading, tokenData } = useUser();
 
   // Protección de ruta: si no está autenticado, redirigir al login
   useEffect(() => {
@@ -22,8 +22,8 @@ export default function Profile() {
     return (
       <>
         <HeaderPanel />
-        <main className="p-5">
-          <div className="text-center">Cargando perfil...</div>
+        <main className="flex min-h-screen flex-col items-center justify-center bg-gray-800 text-white px-4">
+          <div className="text-center text-2xl font-semibold">Cargando perfil...</div>
         </main>
       </>
     );
@@ -37,16 +37,27 @@ export default function Profile() {
   return (
     <>
       <HeaderPanel />
-      <main className="p-5">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-gray-800 text-white px-4">
         <div>
-          <h1>Welcome {user.first_name} {user.last_name}</h1>
+          <h1 className="text-2xl text-center font-semibold">Welcome {user.first_name} {user.last_name}</h1>
         </div>
-        <div>
+
+        <div className="my-5 mx-auto flex flex-col md:flex-row gap-4">
           <div>
-            <h1>Readed Books</h1>
+            <div>
+              <h1 className="text-xl font-semibold">Readed Books</h1>
+            </div>
+            <div>
+
+            </div>
           </div>
           <div>
-            <h1>Owned Books</h1>
+            <div>
+              <h1 className="text-xl font-semibold">Owned Books</h1>
+            </div>
+            <div>
+
+            </div>
           </div>
         </div>
       </main>

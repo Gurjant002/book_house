@@ -9,6 +9,7 @@ import { useUser } from "@/context/UserContext";
 
 export default function Login() {
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [user, setUser] = useState<LoginUser>({
     username: "",
     password: "",
@@ -17,12 +18,12 @@ export default function Login() {
   const router = useRouter();
   const { login, isAuthenticated, isLoading } = useUser();
 
-  // Si ya está autenticado, redirigir
+  // Si ya está autenticado, redirigir (pero solo si no está cargando)
   useEffect(() => {
-    if (isAuthenticated) {
+    if (!isLoading && isAuthenticated) {
       router.push("/");
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, isLoading, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -35,6 +36,7 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsSubmitting(true);
     
     const formData = new URLSearchParams();
     formData.append("username", user.username? user.username : "");
@@ -49,8 +51,25 @@ export default function Login() {
       }
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
+  // Mostrar loading mientras el Context está inicializándose
+  if (isLoading) {
+    return (
+      <>
+        <HeaderPanel />
+        <div className="flex min-h-screen flex-col items-center justify-center bg-gray-800">
+          <div className="text-center text-white">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+            <p>Verificando autenticación...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -100,11 +119,22 @@ export default function Login() {
               />
             </div>
             <button
-              // type="submit"
               onClick={handleSubmit}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+              disabled={isSubmitting}
+              className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center ${
+                isSubmitting 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300'
+              }`}
             >
-              Login
+              {isSubmitting ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Iniciando sesión...
+                </>
+              ) : (
+                'Login'
+              )}
             </button>
           </div>
         </div>

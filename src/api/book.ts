@@ -31,3 +31,17 @@ export async function saveBook(book: Book[]) {
   const data = await res.json();
   return data;
 }
+
+export async function getOwnedBooks(token: string) {
+  const res = await fetch(`${API_URL}/get-owned-books`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  const data = await res.json();
+  return data;
+  
+}

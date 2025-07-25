@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -6,19 +7,13 @@ import HeaderPanel from "../components/header_panel";
 import Alertas from "../components/alertas";
 
 import { saveBook } from "@/api/book";
-import { getUser } from "@/api/user";
-
 import { Book } from "../../models/book";
-import { NonSensitiveUser } from "../../models/user";
-import { ValidatedToken } from "@/models/token";
+import { useUser } from "@/context/UserContext";
 
 export default function Login() {
-  const [action, setAction] = useState<string | undefined>();
   const [year, setYear] = useState<number>(new Date().getFullYear());
-  
-  const [user, setUser] = useState<NonSensitiveUser | null>(null); // Para manejar el usuario
-  const [token, setToken] = useState<ValidatedToken | null>(null); // Para manejar el token de autenticación
 
+  const { user, isAuthenticated, isLoading } = useUser();
   const [error, setError] = useState<number | null>(null); // Para manejar errores
   const [books, setBooks] = useState<Book[]>([]);
   const [book, setBook] = useState({
@@ -30,23 +25,18 @@ export default function Login() {
     cover: undefined as File | undefined | string, // Aquí almacenaremos el archivo de imagen
     language: "",
     available: true, // Por defecto, el libro está disponible
-    owner_id: null,
+    owner_id: user?.id,
   });
 
   const router = useRouter();
 
-  useEffect(() => {
-    
-  }, []);
 
+  // Protección de ruta: si no está autenticado, redirigir al login
   useEffect(() => {
-    if (action === "login") {
-      // Perform login action
-      console.log("Performing login action");
-      router.push("/");
+    if (!isLoading && !isAuthenticated) {
+      router.push("/login");
     }
-  
-  }, [action]);
+  }, [isAuthenticated, isLoading, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -90,7 +80,7 @@ export default function Login() {
         cover: undefined,
         language: " ",
         available: true, // Por defecto, el libro está disponible
-        owner_id: null,
+        owner_id: user?.id,
       });
     }
   }
@@ -101,6 +91,9 @@ export default function Login() {
       setError(404);
       return;
     }else {
+      books.forEach(book => {
+        book.owner_id = user?.id; // Aseguramos que el owner_id esté definido
+      })
       const response = await saveBook(books);
       if (!response) {
         console.error("Failed to save books");
@@ -234,8 +227,7 @@ export default function Login() {
                   type="file"
                   accept="image/*"
                   id="cover"
-                  name={"cover"}
-                  value={book.cover ? (book.cover instanceof File ? book.cover.name : "") : ""}
+                  name="cover"
                   onChange={handleUploadCover}
                   className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   // required

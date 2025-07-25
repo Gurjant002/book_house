@@ -65,19 +65,24 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       }
     } catch (error) {
       console.error("Error durante el login:", error);
-      logout(); // Si algo sale mal, limpiamos todo
+      clearAuthState(); // Si algo sale mal, limpiamos todo sin redireccionar
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Función para manejar el logout
-  const logout = (): void => {
+  // Función para limpiar el estado sin redireccionar
+  const clearAuthState = (): void => {
     sessionStorage.removeItem("token");
     setUser(null);
     setTokenData(null);
     setIsAuthenticated(false);
     setIsLoading(false);
+  };
+
+  // Función para manejar el logout
+  const logout = (): void => {
+    clearAuthState();
     router.push("/login");
   };
 
@@ -95,7 +100,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         const token: Token = JSON.parse(storedToken);
         
         if (!token.access_token) {
-          logout();
+          clearAuthState();
           return;
         }
 
@@ -110,11 +115,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
           setUser(userData);
           setIsAuthenticated(true);
         } else {
-          logout();
+          clearAuthState();
         }
       } catch (error) {
         console.error("Error inicializando autenticación:", error);
-        logout();
+        clearAuthState();
       } finally {
         setIsLoading(false);
       }
@@ -139,4 +144,3 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     </UserContext.Provider>
   );
 };
-        
