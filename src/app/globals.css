@@ -5,7 +5,7 @@
   --foreground: #171717;
 
   --cus-dark: #1E2923;
-  --cus-purpule: #8d52cc;
+  --cus-purple: #8d52cc;
   --cus-dark-blue: #1C1DE6;
   --cus-light-blue: #0195E6;
   --cus-light-blue-2: #5AB5FF;
@@ -65,11 +65,11 @@ body {
   color: var(--cus-dark);
 }
 
-.cus-purpule-bg {
-  background-color: var(--cus-purpule);
+.cus-purple-bg {
+  background-color: var(--cus-purple);
 }
-.cus-purpule-text {
-  color: var(--cus-purpule);
+.cus-purple-text {
+  color: var(--cus-purple);
 }
 
 .cus-dark-blue-bg {

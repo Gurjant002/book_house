@@ -14,7 +14,15 @@ export default function Profile() {
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       router.push("/login");
+    } else {
+      // Si está autenticado, podrías cargar los libros del usuario aquí
+      if (tokenData) {
+        getOwnedBooks(tokenData.payload.sub).catch(err => {
+          console.error("Error fetching owned books:", err);
+        });
+      }
     }
+    
   }, [isAuthenticated, isLoading, router]);
 
   // Mostrar loading mientras se cargan los datos

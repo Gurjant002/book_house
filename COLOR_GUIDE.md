@@ -6,7 +6,7 @@ Esta guía te ayudará a usar correctamente la paleta de colores personalizada d
 
 ```css
 --cus-dark: #1E2923;           /* Verde oscuro profundo */
---cus-purpule: #8d52cc;        /* Púrpura vibrante */
+--cus-purple: #8d52cc;        /* Púrpura vibrante */
 --cus-dark-blue: #1C1DE6;      /* Azul eléctrico */
 --cus-light-blue: #0195E6;     /* Azul cielo */
 --cus-light-blue-2: #5AB5FF;   /* Azul claro */
@@ -16,14 +16,14 @@ Esta guía te ayudará a usar correctamente la paleta de colores personalizada d
 
 ### Fondos:
 - `.cus-dark-bg` - Fondo verde oscuro
-- `.cus-purpule-bg` - Fondo púrpura
+- `.cus-purple-bg` - Fondo púrpura
 - `.cus-dark-blue-bg` - Fondo azul eléctrico
 - `.cus-light-blue-bg` - Fondo azul cielo
 - `.cus-light-blue-2-bg` - Fondo azul claro
 
 ### Textos:
 - `.cus-dark-text` - Texto verde oscuro
-- `.cus-purpule-text` - Texto púrpura
+- `.cus-purple-text` - Texto púrpura
 - `.cus-dark-blue-text` - Texto azul eléctrico
 - `.cus-light-blue-text` - Texto azul cielo
 - `.cus-light-blue-2-text` - Texto azul claro
@@ -41,7 +41,7 @@ Esta guía te ayudará a usar correctamente la paleta de colores personalizada d
 ### 2. **Botones Principales (CTA)**
 ```html
 <!-- Púrpura para acciones importantes -->
-<button class="cus-purpule-bg text-white">
+<button class="cus-purple-bg text-white">
   Login
 </button>
 ```
@@ -65,7 +65,7 @@ Esta guía te ayudará a usar correctamente la paleta de colores personalizada d
 ### 5. **Texto Destacado**
 ```html
 <!-- Púrpura para títulos importantes -->
-<h2 class="cus-purpule-text">Título Destacado</h2>
+<h2 class="cus-purple-text">Título Destacado</h2>
 
 <!-- Azul para enlaces -->
 <a href="#" class="cus-light-blue-text">Enlace</a>
@@ -76,18 +76,18 @@ Esta guía te ayudará a usar correctamente la paleta de colores personalizada d
 ### **Para Headers/Navbar:**
 - **Fondo:** `cus-dark-bg` (verde oscuro)
 - **Texto:** `text-white`
-- **Botones:** `cus-purpule-bg` o `cus-light-blue-bg`
+- **Botones:** `cus-purple-bg` o `cus-light-blue-bg`
 
 ### **Para Cards/Contenido:**
 - **Fondo:** `bg-white` o `bg-gray-50`
-- **Títulos:** `cus-purpule-text`
+- **Títulos:** `cus-purple-text`
 - **Texto normal:** `text-gray-700` o `text-gray-900`
 - **Botones:** `cus-light-blue-bg`
 
 ### **Para Formularios:**
 - **Fondo:** `bg-white`
 - **Labels:** `cus-dark-text`
-- **Botón enviar:** `cus-purpule-bg`
+- **Botón enviar:** `cus-purple-bg`
 - **Botón cancelar:** `cus-light-blue-2-bg`
 
 ## ✅ Buenas Prácticas
@@ -114,7 +114,7 @@ Esta guía te ayudará a usar correctamente la paleta de colores personalizada d
 <header class="cus-dark-bg text-white p-4">
   <h1 class="text-2xl font-bold">G-BOOKS</h1>
   <div class="flex gap-2">
-    <button class="cus-purpule-bg text-white px-4 py-2 rounded">
+    <button class="cus-purple-bg text-white px-4 py-2 rounded">
       Login
     </button>
     <button class="cus-light-blue-bg text-white px-4 py-2 rounded">
@@ -127,7 +127,7 @@ Esta guía te ayudará a usar correctamente la paleta de colores personalizada d
 ### **Card de libro:**
 ```html
 <div class="bg-white p-6 rounded-lg shadow-lg">
-  <h3 class="cus-purpule-text text-xl font-bold mb-2">
+  <h3 class="cus-purple-text text-xl font-bold mb-2">
     Título del Libro
   </h3>
   <p class="text-gray-700 mb-4">
@@ -157,7 +157,7 @@ Esta guía te ayudará a usar correctamente la paleta de colores personalizada d
   <input class="border border-gray-300 rounded p-2 w-full mb-4">
   
   <div class="flex gap-2">
-    <button class="cus-purpule-bg text-white px-4 py-2 rounded">
+    <button class="cus-purple-bg text-white px-4 py-2 rounded">
       Guardar
     </button>
     <button class="cus-light-blue-2-bg text-white px-4 py-2 rounded">
@@ -181,10 +181,10 @@ Para usar junto con tus colores principales:
 ## 🎯 Esquema Recomendado para G-Books
 
 1. **Header/Navbar:** `cus-dark-bg` + `text-white`
-2. **Botones principales:** `cus-purpule-bg` + `text-white`
+2. **Botones principales:** `cus-purple-bg` + `text-white`
 3. **Botones secundarios:** `cus-light-blue-bg` + `text-white`
 4. **Enlaces:** `cus-light-blue-text`
-5. **Títulos importantes:** `cus-purpule-text`
+5. **Títulos importantes:** `cus-purple-text`
 6. **Texto secundario:** `cus-light-blue-2-text`
 7. **Fondos de contenido:** `bg-white` o `bg-gray-50`
 8. **Texto normal:** `text-gray-700` o `text-gray-900`

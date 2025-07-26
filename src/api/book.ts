@@ -33,7 +33,7 @@ export async function saveBook(book: Book[]) {
 }
 
 export async function getOwnedBooks(token: string) {
-  const res = await fetch(`${API_URL}/get-owned-books`, {
+  const res = await fetch(`${API_URL}/owned-books`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
