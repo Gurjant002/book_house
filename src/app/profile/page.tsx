@@ -6,12 +6,13 @@ import HeaderPanel from "../components/header_panel";
 import { useUser } from "@/context/UserContext";
 import { getOwnedBooks } from "@/api/book";
 
-import { OwnBooks } from "@/models/book";
+import { Book } from "@/models/book";
 
 export default function Profile() {
   const router = useRouter();
   const { user, isAuthenticated, isLoading, tokenData } = useUser();
-  const [ownedBooks, setOwnedBooks] = useState<OwnBooks[]>([]);
+  const [ownedBooks, setOwnedBooks] = useState<Book[]>([]);
+  const [ownedBooksLoading, setOwnedBooksLoading] = useState(true);
 
   // Protección de ruta: si no está autenticado, redirigir al login
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function Profile() {
       if (tokenData) {
         getOwnedBooks(tokenData.payload.sub).then(books => {
           setOwnedBooks(books);
+          setOwnedBooksLoading(false);
         }).catch(err => {
           console.error("Error fetching owned books:", err);
         });
@@ -69,7 +71,9 @@ export default function Profile() {
               <h1 className="text-xl font-semibold">Owned Books</h1>
             </div>
             <div>
-              {ownedBooks.length > 0 ? (
+              {ownedBooksLoading ? (
+                <p className="text-lg">Cargando libros...</p>
+              ) : ownedBooks.length > 0 ? (
                 <ul className="list-none pl-5">
                   <li className="text-lg py-3 px-3">
                     <div className="flex justify-between">
@@ -79,11 +83,12 @@ export default function Profile() {
                     </div>
                   </li>
                   {ownedBooks.map((book) => (
-                    <li key={book.id} className="text-lg py-5 px-3 cus-purple-bg mt-5">
+                    <li key={book.id} className="text-lg py-5 px-3 cus-purple-bg rounded mt-5">
                       <div className="flex justify-between">
                         <span className="font-semibold">{book.title}</span>
                         <span className="ml-2">{book.author}</span>
                         <span className="ml-2">{book.published_year}</span>
+                        <span className="ml-2">{book.date_added ? format(book.date_added, 'dd/MM/yyyy') : "No disponible"}</span>
                       </div>
                     </li>
                   ))}

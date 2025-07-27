@@ -93,6 +93,8 @@ export default function Login() {
     }else {
       books.forEach(book => {
         book.owner_id = user?.id; // Aseguramos que el owner_id esté definido
+        book.owner = user ? user : undefined; // Asignamos el usuario actual como propietario
+        book.date_added = new Date(); // Agregamos la fecha de adición
       })
       const response = await saveBook(books);
       if (!response) {

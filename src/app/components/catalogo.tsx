@@ -8,16 +8,18 @@ import { Book } from "@/models/book";
 
 export default function Catalog() {
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     const books = async () => {
       try {
         const data = await getBooks();
-        setBooks(data);
         if (!data || data.length === 0) {
           setError(true);
         }else {
+          setBooks(data);
+          setLoading(false);
           setError(false);
         }
       } catch (error) {
@@ -42,17 +44,23 @@ export default function Catalog() {
           <h1 className="text-3xl md:text-6xl font-bold my-3 break-all md:break-words">Welcome to G-Books {error}</h1>
           <p className="animation-typing text-lg md:text-3xl break-all">ਭਉ! ਕੀ ਕਰਨ ਦਿਆ? ਕਿਤਾਬ ਲਭਨ ਦਯਾਨ ਵਾ?{/*  bilkul sehi jaga aya waa, ethe tenu free ch booka parn nu milngya! */}</p>
         </header>
-
         {error == false && error !== null ?
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 px-48">
           {books.map((book: Book) => (
             <div key={book.id} className="bg-gray-50 text-gray-700 p-5 rounded-lg shadow-lg flex flex-col gap-3 h-fit w-full">
               <div className="flex flex-col gap-5">
                 <div className="flex flex-col">
-                  <div className="">
-                    <h2 className="text-2xl font-bold cus-purple-text">{book.title}</h2>
+                  <div className="flex justify-between items-center py-2">
+                    <div>
+                      <h2 className="text-2xl font-bold cus-purple-text">{book.title}</h2>
+                    </div>
+                    <div>
+                      {book.available ? <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-semibold bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Available</span> :
+                      <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-semibold bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">Not Available</span>
+                      }
+                    </div>
                   </div>
-                  <div className="h-52 flex items-center justify-center">
+                  <div className="h-52 flex items-center justify-center mt-5">
                     <img src={`data:image/jpeg;base64, ${book.cover?.split(',')[1]}`} alt={book.title} className="size-52 object-cover border-2 border-black" />
                   </div>
                 </div>
@@ -65,25 +73,21 @@ export default function Catalog() {
                       <p>Year: {book.published_year}</p>
                     </div>
                     <div className="whitespace-nowrap border-l-2 border-gray-300 pl-3 overflow-hidden">
-                      <p>Owner: {book.owner_id ? book.owner_id : "Gurjant Singh"}</p>
+                      <p>Owner: { book.owner?.username ? book.owner.username : "Unknown" }</p>
                       <p>Author: {book.author}</p>
                       <p className="hover:overflow-auto">ISBN: {book.isbn}</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div>
-                {book.available ? <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-semibold bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Available</span> :
-                <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-semibold bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">Not Available</span>
-                }
-              </div>
             </div>
           ))}
           </div> :
           <div className="bg-gray-800 text-white p-8 rounded-lg shadow-lg w-fit mt-0">
-            <p className="text-xl">No books available at the moment.</p>
+            <p className="text-xl">No books available at the moment</p>
           </div>
         }
+        {loading && <p className="text-lg">Loading books...</p>}
 
         {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div className="bg-gray-800 text-white p-8 rounded-lg shadow-lg w-80">

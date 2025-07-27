@@ -13,6 +13,18 @@ export interface User {
     birth_date?: string; // Optional field for date of birth
 }
 
+/**
+ * Represents a user object with non-sensitive information.
+ *
+ * @property id - Unique identifier for the user.
+ * @property username - The user's username.
+ * @property email - The user's email address.
+ * @property first_name - The user's first name.
+ * @property last_name - The user's last name.
+ * @property is_active - Indicates if the user's account is active.
+ * @property date_joined - The date the user joined, in ISO string format.
+ * @property birth_date - The user's date of birth (optional), in ISO string format.
+ */
 export interface NonSensitiveUser {
     id: number;
     username: string;
