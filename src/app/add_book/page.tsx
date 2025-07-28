@@ -10,12 +10,14 @@ import { saveBook } from "@/api/book";
 import { Book } from "../../models/book";
 import { useUser } from "@/context/UserContext";
 
-export default function Login() {
-  const [year, setYear] = useState<number>(new Date().getFullYear());
+export default function AddBook() {
+  const [year] = useState<number>(new Date().getFullYear());
 
   const { user, isAuthenticated, isLoading } = useUser();
   const [error, setError] = useState<number | null>(null); // Para manejar errores
   const [books, setBooks] = useState<Book[]>([]);
+  const [response, setResponse] = useState<any>(null); // Para manejar la respuesta del servidor
+  const [cleanList, setCleanList] = useState<boolean>(false); // Para limpiar la lista de libros
   const [book, setBook] = useState({
     title: "",
     author: "",
@@ -99,19 +101,34 @@ export default function Login() {
       const response = await saveBook(books);
       if (!response) {
         console.error("Failed to save books");
+        setResponse("Failed to save books");
         setError(404);
         return;
       }else if (response.error) {
         console.error("Error saving books:", response.error);
+        setResponse("Error saving books: " + response.error);
         setError(404);
         return;
       }else if (response.success) {
         console.log("Books saved successfully:", response.data);
+        setResponse("Books saved successfully");
         setBooks([]); // Limpiar la lista de libros después de guardar
+        setBook({
+          title: "",
+          author: "",
+          published_year: 0,
+          isbn: "",
+          pages: 0,
+          cover: undefined as File | undefined | string, // Aquí almacenaremos el archivo de imagen
+          language: "",
+          available: true, // Por defecto, el libro está disponible
+          owner_id: user?.id,
+        });
         setError(null); // Resetear el error
         return;
       }else if (response === null) {
         console.error("No response from server");
+        setResponse("No response from server");
         setError(404);
         return;
       }
@@ -145,10 +162,10 @@ export default function Login() {
   return (
     <>
       <HeaderPanel />
-      <main className="min-h-screen items-center justify-center bg-gray-800 py-5 ">
+      <main className="min-h-screen items-center justify-center cus-dark-bg py-5 ">
         <div className="grid grid-rows-1 w-fit md:grid-rows-2 md:w-1/2 mx-auto ">
           <div className="bg-white dark:bg-gray-600 p-8 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold">Add New Books</h2>
+            <h2 className="text-2xl font-bold cus-purple-text">Add New Books</h2>
             {/* <form className="mt-4" action="/api/login" method="POST"> */}
             <form className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-5" onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -270,11 +287,19 @@ export default function Login() {
               ) */
             }
           </div>
+
+          {
+            response && (
+              <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-lg">
+                <p>{response}</p>
+              </div>
+            )
+          }
           
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 m-auto mt-5">
             {books.map((book, index) => (
               <div key={index} className="bg-white dark:bg-gray-600 p-4 rounded-lg shadow-lg">
-                <h3 className="text-xl font-bold">{book.title}</h3>
+                <h3 className="text-xl font-bold cus-purple-text">{book.title}</h3>
                 <div>
                   <img
                     alt={book.title}

@@ -1,5 +1,5 @@
-import { User, NonSensitiveUser, LoginUser, RegisterUser } from "@/models/user";
-import { Token, ValidatedToken } from "@/models/token";
+import { User, NonSensitiveUser, RegisterUser } from "@/models/user";
+import { Token } from "@/models/token";
 
 const API_URL = 'http://localhost:8000/api/users';
 

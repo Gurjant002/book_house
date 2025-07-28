@@ -17,9 +17,9 @@ export default function Catalog() {
         const data = await getBooks();
         if (!data || data.length === 0) {
           setError(true);
+          setLoading(false);
         }else {
           setBooks(data);
-          setLoading(false);
           setError(false);
         }
       } catch (error) {
@@ -35,6 +35,10 @@ export default function Catalog() {
     console.log(error)
   }, [error]);
 
+  useEffect(() => {
+    setLoading(false);
+  }, [books]);
+
   return (
     // <div className="font-mono flex min-h-screen flex-col items-center justify-between bg-gradient-to-r from-emerald-500 to-emerald-900">
     <div className="font-mono flex min-h-screen flex-col items-center justify-between cus-dark-bg">
@@ -45,7 +49,7 @@ export default function Catalog() {
           <p className="animation-typing text-lg md:text-3xl break-all">ਭਉ! ਕੀ ਕਰਨ ਦਿਆ? ਕਿਤਾਬ ਲਭਨ ਦਯਾਨ ਵਾ?{/*  bilkul sehi jaga aya waa, ethe tenu free ch booka parn nu milngya! */}</p>
         </header>
         {error == false && error !== null ?
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 px-48">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 px-48">
           {books.map((book: Book) => (
             <div key={book.id} className="bg-gray-50 text-gray-700 p-5 rounded-lg shadow-lg flex flex-col gap-3 h-fit w-full">
               <div className="flex flex-col gap-5">
@@ -78,6 +82,13 @@ export default function Catalog() {
                       <p className="hover:overflow-auto">ISBN: {book.isbn}</p>
                     </div>
                   </div>
+                </div>
+                <div>
+                  <a href={`/${book.id}/${book.title.replace(' ', '_')}`}>
+                    <button className="cursor-pointer w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition duration-300">
+                      Read Book
+                    </button>
+                  </a>
                 </div>
               </div>
             </div>

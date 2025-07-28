@@ -1,4 +1,4 @@
-import { Token, ValidatedToken } from "@/models/token";
+import { ValidatedToken } from "@/models/token";
 
 const API_URL = 'http://localhost:8000/api/users';
 

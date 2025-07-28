@@ -74,15 +74,15 @@ export default function Register() {
   return (
     <>
       {/* <HeaderPanel /> */}
-      <header className="font-mono p-5 bg-gray-800 text-white">
+      <header className="font-mono p-5 cus-dark-bg text-white">
         <div className="m-auto w-full lg:w-7xl flex justify-center">
-          <a href="/" className="font-bold text-4xl text-center">G-BOOK</a>
+          <a href="/" className="font-bold text-4xl text-center cus-purple-text">G-BOOK</a>
         </div>
       </header>
-      <main className="min-h-screen bg-gray-800 py-32">
+      <main className="min-h-screen cus-dark-bg py-32">
         <div className="bg-white dark:bg-gray-600 p-5 m-auto w-full lg:w-7xl lg:rounded-2xl">
           <div>
-            <h2 className="text-2xl font-bold">Register</h2>
+            <h2 className="text-3xl font-bold cus-purple-text">Register</h2>
           </div>
           {errorMsg && <p className="text-red-500 text-sm font-bold" dangerouslySetInnerHTML={{ __html: errorMsg }}></p>}
           <p className="text-gray-500 text-sm">Please fill in the form below to create an account.</p>
@@ -219,7 +219,7 @@ export default function Register() {
               <div>{confirmPass === false && <p className="text-red-500 text-sm">Passwords do not match</p>}</div>
             </div>
             <div>
-              <button type="button" disabled={confirmPass === false} className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 cursor-pointer transition-colors duration-300" onClick={handleRegister}>
+              <button type="button" disabled={confirmPass === false} className="cus-purple-bg text-white font-semibold py-2 px-4 rounded-lg shadow-md cursor-pointer" onClick={handleRegister}>
                 Register
               </button>
             </div>

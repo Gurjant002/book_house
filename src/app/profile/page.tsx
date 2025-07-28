@@ -7,6 +7,7 @@ import { useUser } from "@/context/UserContext";
 import { getOwnedBooks } from "@/api/book";
 
 import { Book } from "@/models/book";
+import { format } from "date-fns";
 
 export default function Profile() {
   const router = useRouter();
@@ -80,17 +81,21 @@ export default function Profile() {
                       <span className="font-semibold">Title</span>
                       <span className="ml-2">Author</span>
                       <span className="ml-2">Year</span>
+                      <span className="ml-2">Date Added</span>
                     </div>
                   </li>
                   {ownedBooks.map((book) => (
-                    <li key={book.id} className="text-lg py-5 px-3 cus-purple-bg rounded mt-5">
-                      <div className="flex justify-between">
-                        <span className="font-semibold">{book.title}</span>
-                        <span className="ml-2">{book.author}</span>
-                        <span className="ml-2">{book.published_year}</span>
-                        <span className="ml-2">{book.date_added ? format(book.date_added, 'dd/MM/yyyy') : "No disponible"}</span>
-                      </div>
-                    </li>
+                    <>
+                      <hr className="my-2" />
+                      <li key={book.id} className="text-lg py-5 px-3 cus-purple-bg rounded mt-3">
+                        <div className="flex justify-between">
+                          <span className="font-semibold">{book.title}</span>
+                          <span className="ml-2">{book.author}</span>
+                          <span className="ml-2">{book.published_year}</span>
+                          <span className="ml-2">{book.date_added ? format(book.date_added, 'dd/MM/yyyy') : "No disponible"}</span>
+                        </div>
+                      </li>
+                    </>
                   ))}
                 </ul>
               ) : (
