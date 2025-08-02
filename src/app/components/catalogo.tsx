@@ -84,7 +84,7 @@ export default function Catalog() {
                   </div>
                 </div>
                 <div>
-                  <a href={`/${book.id}/${book.title.replace(' ', '_')}`}>
+                  <a href={`/${book.id}`}>
                     <button className="cursor-pointer w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition duration-300">
                       Read Book
                     </button>

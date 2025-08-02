@@ -22,6 +22,23 @@ export async function getBooks() {
   return data;
 }
 
+export async function getBookById(id: string) {
+  const res = await fetch(`${API_URL}/get-book/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+  });
+  if (!res.ok) {
+    const err = await res.json()
+    throw new Error(err.detail || 'Failed to fetch book');
+
+  }
+  const data = await res.json();
+  return data;
+}
+
 export async function saveBook(book: Book[]) {
   const res = await fetch(`${API_URL}/add-books`, {
     method: 'POST',
