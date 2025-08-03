@@ -41,7 +41,7 @@ export default function BookPage() {
           </div>
           <div className="gap-6 rounded-lg">
           
-          <div className="flex flex-col px-52">
+          <div className="flex flex-col md:px-52">
             <div className="mb-0">
               <p>
                 <a href="/" className="underline">home</a> / {book?.title}

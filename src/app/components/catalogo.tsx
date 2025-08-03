@@ -49,7 +49,7 @@ export default function Catalog() {
           <p className="animation-typing text-lg md:text-3xl break-all">ਭਉ! ਕੀ ਕਰਨ ਦਿਆ? ਕਿਤਾਬ ਲਭਨ ਦਯਾਨ ਵਾ?{/*  bilkul sehi jaga aya waa, ethe tenu free ch booka parn nu milngya! */}</p>
         </header>
         {error == false && error !== null ?
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 px-48">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 px-5 md:px-48">
           {books.map((book: Book) => (
             <div key={book.id} className="bg-gray-50 text-gray-700 p-5 rounded-lg shadow-lg flex flex-col gap-3 h-fit">
               <div className="flex flex-col gap-5">
