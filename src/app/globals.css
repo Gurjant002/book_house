@@ -93,3 +93,7 @@ body {
   color: var(--cus-light-blue-2);
 }
 
+.hv-cus-light-blue-btn:hover {
+  background-color: var(--cus-light-blue);
+  color: var(--foreground);
+}

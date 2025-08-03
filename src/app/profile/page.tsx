@@ -38,8 +38,8 @@ export default function Profile() {
     return (
       <>
         <HeaderPanel />
-        <main className="flex min-h-screen flex-col items-center justify-center bg-gray-800 text-white px-4">
-          <div className="text-center text-2xl font-semibold">Cargando perfil...</div>
+        <main className="flex min-h-screen flex-col items-center justify-center cus-dark-bg text-white px-4">
+          <div className="text-center text-2xl font-semibold">Loading Profile...</div>
         </main>
       </>
     );
@@ -53,46 +53,74 @@ export default function Profile() {
   return (
     <>
       <HeaderPanel />
-      <main className="flex min-h-screen flex-col items-center justify-center cus-dark-bg text-white px-4">
-        <div>
-          <h1 className="text-2xl text-center font-semibold">Welcome {user.first_name} {user.last_name}</h1>
+      <main className="flex min-h-screen flex-col items-center cus-dark-bg text-white px-4">
+        <div className="my-20">
+          <h1 className="text-6xl text-center font-semibold">Welcome {user.first_name} {user.last_name}</h1>
         </div>
 
-        <div className="my-5 mx-auto flex flex-col md:flex-row gap-4">
+        <div className="my-5 mx-auto flex flex-row gap-10">
           <div>
             <div>
-              <h1 className="text-xl font-semibold">Readed Books</h1>
+              <h1 className="text-xl font-semibold text-center">Borrowed Books</h1>
             </div>
             <div>
-
-            </div>
-          </div>
-          <div>
-            <div>
-              <h1 className="text-xl font-semibold">Owned Books</h1>
-            </div>
-            <div>
-              {ownedBooksLoading ? (
-                <p className="text-lg">Cargando libros...</p>
-              ) : ownedBooks.length > 0 ? (
-                <ul className="list-none pl-5">
+              {ownedBooks.length > 0 ? (
+                <ul className="list-none px-5">
                   <li className="text-lg py-3 px-3">
-                    <div className="flex justify-between">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                       <span className="font-semibold">Title</span>
-                      <span className="ml-2">Author</span>
-                      <span className="ml-2">Year</span>
-                      <span className="ml-2">Date Added</span>
+                      <span className="text-center">Author</span>
+                      <span className="text-center">Year</span>
+                      <span className="text-center">Start Date</span>
+                      <span className="text-center">End Date</span>
                     </div>
                   </li>
                   {ownedBooks.map((book) => (
                     <>
                       <hr className="my-2" />
                       <li key={book.id} className="text-lg py-5 px-3 cus-purple-bg rounded mt-3">
-                        <div className="flex justify-between">
+                        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                           <span className="font-semibold">{book.title}</span>
-                          <span className="ml-2">{book.author}</span>
-                          <span className="ml-2">{book.published_year}</span>
-                          <span className="ml-2">{book.date_added ? format(book.date_added, 'dd/MM/yyyy') : "No disponible"}</span>
+                          <span className="text-center">{book.author}</span>
+                          <span className="text-center">{book.published_year}</span>
+                          <span className="text-center">{book.date_added ? format(book.date_added, 'dd/MM/yyyy') : "Not Available"}</span>
+                          <span className="text-center">{book.date_added ? format(book.date_added, 'dd/MM/yyyy') : "Not Available"}</span>
+                        </div>
+                      </li>
+                    </>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-lg text-center">No tienes libros propios.</p>
+              )}
+            </div>
+          </div>
+          <div>
+            <div>
+              <h1 className="text-xl font-semibold text-center">Your Books</h1>
+            </div>
+            <div>
+              {ownedBooksLoading ? (
+                <p className="text-lg">Cargando libros...</p>
+              ) : ownedBooks.length > 0 ? (
+                <ul className="list-none px-5">
+                  <li className="text-lg py-3 px-3">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <span className="font-semibold text-center">Title</span>
+                      <span className="text-center">Author</span>
+                      <span className="text-center">Year</span>
+                      <span className="text-center">Date Added</span>
+                    </div>
+                  </li>
+                  {ownedBooks.map((book) => (
+                    <>
+                      <hr className="my-2" />
+                      <li key={book.id} className="text-lg py-5 px-3 cus-purple-bg rounded mt-3">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                          <span className="font-semibold text-center">{book.title}</span>
+                          <span className="text-center">{book.author}</span>
+                          <span className="text-center">{book.published_year}</span>
+                          <span className="text-center">{book.date_added ? format(book.date_added, 'dd/MM/yyyy') : "Not Available"}</span>
                         </div>
                       </li>
                     </>

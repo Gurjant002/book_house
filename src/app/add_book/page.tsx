@@ -38,6 +38,7 @@ export default function AddBook() {
     if (!isLoading && !isAuthenticated) {
       router.push("/login");
     }
+    
   }, [isAuthenticated, isLoading, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,32 +134,22 @@ export default function AddBook() {
         return;
       }
     }
-    /* try {
-      const response = await fetch("/add-book", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(books),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to save books");
-      }
-
-      const data = await response.json();
-      console.log("Books saved successfully:", data);
-      setBooks([]);
-    } catch (error) {
-      console.error("Error saving books:", error);
-      setError(404)
-    } */
   }
 
   useEffect(() => {
     console.log(books);
   }, [books]);
 
+  if (isLoading) {
+    return (
+      <>
+        <HeaderPanel />
+        <main className="flex min-h-screen flex-col items-center justify-center cus-dark-bg text-white px-4">
+          <div className="text-center text-2xl font-semibold">Authenticating...</div>
+        </main>
+      </>
+    );
+  }
   return (
     <>
       <HeaderPanel />

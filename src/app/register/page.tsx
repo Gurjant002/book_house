@@ -7,6 +7,7 @@ import { RegisterUser } from "@/models/user"
 
 import { registerUser } from "@/api/user"
 import { useRouter } from "next/navigation"
+import Link from "next/dist/client/link";
 
 export default function Register() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
@@ -75,8 +76,9 @@ export default function Register() {
     <>
       {/* <HeaderPanel /> */}
       <header className="font-mono p-5 cus-dark-bg text-white">
-        <div className="m-auto w-full lg:w-7xl flex justify-center">
-          <a href="/" className="font-bold text-4xl text-center cus-purple-text">G-BOOK</a>
+        <div className="w-fit m-auto space-y-2">
+          <Link href="/" className="m-auto font-bold text-4xl text-center cus-purple-text">G-BOOKS</Link>
+          <p className="text-white text-1xl font-bold text-center">ਅੱਖਰਾਂ ਦੀ ਉਸਤਤ</p>
         </div>
       </header>
       <main className="min-h-screen cus-dark-bg py-32">

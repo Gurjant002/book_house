@@ -62,7 +62,17 @@ export default function BookPage() {
                     <p><strong>Pages:</strong> {book.pages}</p>
                     <p><strong>Owner:</strong> {book.owner?.username}</p>
                     {book.description && <p><strong>Description:</strong> {book.description}</p>}
-                    <p><strong>Available:</strong> {book.available ? "Yes" : "No"}</p>
+                    <div>
+                      {book.available ? (
+                        <button className="cus-light-blue-2-bg hv-cus-light-blue-btn transition-colors duration-300 text-white px-3 py-1 rounded cursor-pointer">
+                          Borrow Book
+                        </button>
+                      ) : (
+                        <button disabled className="bg-gray-400 text-white px-3 py-1 rounded cursor-not-allowed">
+                          Not Available
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}

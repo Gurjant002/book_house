@@ -49,9 +49,9 @@ export default function Catalog() {
           <p className="animation-typing text-lg md:text-3xl break-all">ਭਉ! ਕੀ ਕਰਨ ਦਿਆ? ਕਿਤਾਬ ਲਭਨ ਦਯਾਨ ਵਾ?{/*  bilkul sehi jaga aya waa, ethe tenu free ch booka parn nu milngya! */}</p>
         </header>
         {error == false && error !== null ?
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 px-48">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 px-48">
           {books.map((book: Book) => (
-            <div key={book.id} className="bg-gray-50 text-gray-700 p-5 rounded-lg shadow-lg flex flex-col gap-3 h-fit w-full">
+            <div key={book.id} className="bg-gray-50 text-gray-700 p-5 rounded-lg shadow-lg flex flex-col gap-3 h-fit">
               <div className="flex flex-col gap-5">
                 <div className="flex flex-col">
                   <div className="flex justify-between items-center py-2">
@@ -70,13 +70,13 @@ export default function Catalog() {
                 </div>
                 <div className="text-lg text-justify">
                   <p className="text-2xl font-semibold">Description</p>
-                  <div className="flex flex-col md:flex-row gap-5 justify-between">
-                    <div className="whitespace-nowrap border-l-2 border-gray-300 pl-3">
+                  <div className="flex flex-col md:flex-row gap-5">
+                    <div className="whitespace-nowrap border-l-2 border-gray-300 px-3">
                       <p>ID: {book.id}</p>
                       <p>Pages: {book.pages}</p>
                       <p>Year: {book.published_year}</p>
                     </div>
-                    <div className="whitespace-nowrap border-l-2 border-gray-300 pl-3 overflow-hidden">
+                    <div className="whitespace-nowrap border-l-2 border-gray-300 px-3 overflow-hidden">
                       <p>Owner: { book.owner?.username ? book.owner.username : "Unknown" }</p>
                       <p>Author: {book.author}</p>
                       <p className="hover:overflow-auto">ISBN: {book.isbn}</p>
@@ -86,7 +86,7 @@ export default function Catalog() {
                 <div>
                   <a href={`/${book.id}`}>
                     <button className="cursor-pointer w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition duration-300">
-                      Read Book
+                      About Book
                     </button>
                   </a>
                 </div>
