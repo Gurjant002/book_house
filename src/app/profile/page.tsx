@@ -59,7 +59,7 @@ export default function Profile() {
           <h1 className="text-6xl text-center font-semibold">Welcome {user.first_name} {user.last_name}</h1>
         </div>
 
-        <div className="my-5 mx-auto flex flex-col md:flex-row gap-10">
+        <div className="my-5 mx-auto flex flex-col md:flex-row gap-2">
           <div>
             <div>
               <h1 className="text-xl font-semibold text-center">Borrowed Books</h1>
@@ -99,6 +99,47 @@ export default function Profile() {
               )}
             </div>
           </div>
+
+          <div>
+            <div>
+              <h1 className="text-xl font-semibold text-center">Readed Books</h1>
+            </div>
+            <div>
+              {ownedBooks.length > 0 ? (
+                <ul className="list-none md:px-5">
+                  <li className="text-lg md:py-2 md:px-3">
+                    <div className="grid grid-cols-5 md:grid-cols-5 gap-4">
+                      <span className="text-center">Title</span>
+                      <span className="text-center">Author</span>
+                      <span className="text-center">Year</span>
+                      <span className="text-center text-nowrap">Start Date</span>
+                      <span className="text-center text-nowrap">End Date</span>
+                    </div>
+                  </li>
+                  {ownedBooks.map((book) => (
+                    <>
+                      <hr className="mt-2" />
+                      <li key={book.id} className="text-lg py-2 px-3 cus-purple-bg rounded mt-3">
+                        <div>
+                          <Link href={`/books/${book.id}`} className="text-center hover:underline grid grid-cols-5 md:grid-cols-5 gap-4">
+                            <span className="text-center">{book.title}</span>
+                            <span className="text-center">{book.author}</span>
+                            <span className="text-center">{book.published_year}</span>
+                            <span className="text-center">{book.date_added ? format(book.date_added, 'dd/MM/yyyy') : "Not Available"}</span>
+                            <span className="text-center">{book.date_added ? format(book.date_added, 'dd/MM/yyyy') : "Not Available"}</span>
+                          </Link>
+                        </div>
+                      </li>
+                      <hr className="mt-2" />
+                    </>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-lg text-center">No tienes libros propios.</p>
+              )}
+            </div>
+          </div>
+
           <div>
             <div>
               <h1 className="text-xl font-semibold text-center">Your Books</h1>
