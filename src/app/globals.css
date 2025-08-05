@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --cus-dark: #1E2923;
+  --cus-purple: #8d52cc;
+  --cus-dark-blue: #1C1DE6;
+  --cus-light-blue: #0195E6;
+  --cus-light-blue-2: #5AB5FF;
+
 }
 
 @theme inline {
@@ -16,6 +23,7 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    color: var(--background);
   }
 }
 
@@ -30,10 +38,16 @@ body {
   font-family: monospace;
   white-space: nowrap;
   border-right: .15em solid var(--foreground);
-  width: 41ch;
-  /* overflow: hidden; */
-  animation: typing 15s steps(41), blink .5s infinite step-end alternate;
+  width: 35ch;
+  max-width: 100%; /* Added for responsiveness */
+  animation: typing 15s steps(36), blink .1s infinite step-end alternate;
   overflow: hidden;
+}
+
+@media (max-width: 600px) { /* Responsive adjustments for smaller screens */
+  .animation-typing {
+    width: 31ch; /* Adjust width for smaller screens */
+  }
 }
 
 @keyframes typing {
@@ -42,4 +56,44 @@ body {
 
 @keyframes blink {
   50% { border-color: var(--foreground) }
+}
+
+.cus-dark-bg {
+  background-color: var(--cus-dark);
+}
+.cus-dark-text {
+  color: var(--cus-dark);
+}
+
+.cus-purple-bg {
+  background-color: var(--cus-purple);
+}
+.cus-purple-text {
+  color: var(--cus-purple);
+}
+
+.cus-dark-blue-bg {
+  background-color: var(--cus-dark-blue);
+}
+.cus-dark-blue-text {
+  color: var(--cus-dark-blue);
+}
+
+.cus-light-blue-bg {
+  background-color: var(--cus-light-blue);
+}
+.cus-light-blue-text {
+  color: var(--cus-light-blue);
+}
+
+.cus-light-blue-2-bg {
+  background-color: var(--cus-light-blue-2);
+}
+.cus-light-blue-2-text {
+  color: var(--cus-light-blue-2);
+}
+
+.hv-cus-light-blue-btn:hover {
+  background-color: var(--cus-light-blue);
+  color: var(--foreground);
 }
