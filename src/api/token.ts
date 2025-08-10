@@ -1,6 +1,6 @@
 import { ValidatedToken } from "@/models/token";
 
-const API_URL = 'http://localhost:8000/api/users';
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}api/users`;
 
 export async function validateToken(token: string): Promise<ValidatedToken> {
   const response = await fetch(`${API_URL}/tokenvalidate`, {

@@ -5,7 +5,7 @@ import {Book} from '../models/book';
 //   return data;
 // }
 
-const API_URL = 'http://localhost:8000/api/books';
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}api/books`;
 
 export async function getBooks() {
   const res = await fetch(`${API_URL}/get-all-books`, {
